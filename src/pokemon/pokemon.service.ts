@@ -48,13 +48,13 @@ export class PokemonService {
     return pokemon;
   }
 
-  async update(term: string, updatePokemonDto: UpdatePokemonDto) : Promise<Pokemon>{
+  async update(term: string, updatePokemonDto: UpdatePokemonDto) {
     const pokemon = await this.findOne(term);
     if(updatePokemonDto.name){
       updatePokemonDto.name = updatePokemonDto.name.toLowerCase();
     }
     await pokemon.updateOne(updatePokemonDto, {new: true});
-    return pokemon;
+    return {...pokemon.toJSON(), ...updatePokemonDto};
   }
 
   remove(id: number) {
